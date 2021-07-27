@@ -1,2 +1,2 @@
 # PracticeProjects
-A Repository for Practice programs. Nothing inspirational.
+A Repository for Practice programs. 

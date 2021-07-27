@@ -1,0 +1,391 @@
+/**
+ * Class Commission Calculator
+ * 
+ * Data 17/12/2019
+ * 
+ * Author: Owen Ramsey
+ * 
+ * Bournemouth University
+ * 
+ * This program is used to calculate commision for an employee based on their sales band and volume.
+ * 
+ * Rules:
+ * 0-19999     = 0% 
+ * 20000-30999 = 5%
+ * 31000-45999 = 10%
+ * 46000-59999 = 12%
+ * 60000+      = 15%
+ */
+
+// Import items from the java library
+
+import javax.swing.*;       // JFrame, JLabel, JComboBox, ---- etc
+import java.awt.*;          // Font
+import javax.swing.border.*;// Border, BorderFactory
+import java.awt.event.*;    // ActionListener, ActionEvent
+
+public class CommissionCalculator implements ActionListener
+{
+  // Data items -
+  private JFrame frame;
+  private JPanel topPanel,infoPanel,mainPanel,buttonPanel,commPanel,top2Panel,info2Panel,button2Panel;
+  private JLabel headerLabel,header2Label,salesAssistantLabel,salesVolumeLabel,salesTotalValueLabel;
+  private Border beveledBorder1,beveledBorder2;
+  private JTextField salesAdvisorNameInput, salesVolumeInput, salesTotalValueInput; 
+  private Font font1,font2,font3;
+  private JButton calculateButton,refreshButton,exitButton,exit2Button,returnButton;
+  private JTextArea resultsLabel;
+  
+  // Constructor
+  public CommissionCalculator()
+  {
+      // Create font classes for use later in the code.
+      font1 = new Font("TIMESNEWROMAN", Font.BOLD, 30);
+      font2 = new Font("TIMESNEWROMAN", Font.PLAIN, 20);
+      font3 = new Font("TIMESNEWROMAN", Font.BOLD, 20);
+      
+      
+      // Create the border classes for later use in the code.
+      beveledBorder1 = BorderFactory.createRaisedBevelBorder();
+      beveledBorder2 = BorderFactory.createLoweredBevelBorder();
+      
+      // Create the initial frame.
+      frame = new JFrame("Commission Calculator");
+      frame.setBounds (10,10,750,650);
+      frame.setLayout(null);
+          
+      // Build the main panel and the border for the panel.
+      mainPanel = new JPanel();
+      mainPanel.setBounds (20,20,690,570);
+      mainPanel.setLayout(null);
+      mainPanel.setBorder (beveledBorder2);
+      frame.add (mainPanel);
+      
+      // Create the top panel and the border for the panel.
+      topPanel = new JPanel();
+      topPanel.setBounds (10,10,670,120);
+      topPanel.setLayout(null);
+      topPanel.setBorder (beveledBorder1);
+      mainPanel.add (topPanel);
+      
+      // Create top panel J Label for header and position it in the center of the top panel.
+      headerLabel = new JLabel("Commission Calculator", SwingConstants.CENTER);
+      headerLabel.setLayout(null);
+      headerLabel.setBounds(10,10,670,100);
+      topPanel.add (headerLabel);
+      headerLabel.setFont(font1);
+      
+      // Create panel which all of the information will be inputted onto, this will also have all the buttons on it.
+      infoPanel = new JPanel();
+      infoPanel.setBounds (10,140,670,420);
+      infoPanel.setLayout (null);
+      infoPanel.setBorder (beveledBorder1);
+      mainPanel.add (infoPanel);
+      
+      // Create the sales assistant name input label for the user.
+      salesAssistantLabel = new JLabel("Sales Advisors Name :");
+      salesAssistantLabel.setBounds (20,50,300,50);
+      salesAssistantLabel.setLayout (null);
+      infoPanel.add (salesAssistantLabel);
+      salesAssistantLabel.setFont(font3);
+      
+      // Create the sales assistant text box for the user to input.
+      salesAdvisorNameInput = new JTextField();
+      salesAdvisorNameInput.setBounds (400,65,200,25);
+      salesAdvisorNameInput.setLayout (null);
+      infoPanel.add (salesAdvisorNameInput);
+      salesAdvisorNameInput.setVisible (true);
+      
+      // Create the sales volume label for the user to input.
+      salesVolumeLabel = new JLabel("Sales Volume of Advisor :");
+      salesVolumeLabel.setBounds (20,150,350,50);
+      salesVolumeLabel.setLayout (null);
+      infoPanel.add (salesVolumeLabel);
+      salesVolumeLabel.setFont(font3);
+      
+      // Create the sales volume text box for the user to input.
+      salesVolumeInput = new JTextField();
+      salesVolumeInput.setBounds (400,165,200,25);
+      salesVolumeInput.setLayout (null);
+      infoPanel.add (salesVolumeInput);
+      salesVolumeInput.setVisible (true);
+      
+      // Create the sales volume label for the user to input.
+      salesTotalValueLabel = new JLabel("Advisors Sales Value :");
+      salesTotalValueLabel.setBounds (20,250,300,50);
+      salesTotalValueLabel.setLayout (null);
+      infoPanel.add (salesTotalValueLabel);
+      salesTotalValueLabel.setFont(font3);
+      
+      // Create the sales volume text box for the user to input.
+      salesTotalValueInput = new JTextField();
+      salesTotalValueInput.setBounds (400,265,200,25);
+      salesTotalValueInput.setLayout (null);
+      infoPanel.add (salesTotalValueInput);
+      salesTotalValueInput.setVisible (true);
+      
+      // Create the button panel for the buttons to go onto which will be on top of the info panel.
+      buttonPanel = new JPanel();
+      buttonPanel.setLayout (null);
+      buttonPanel.setBounds (10,310,650,100);
+      buttonPanel.setBorder (beveledBorder2);
+      infoPanel.add (buttonPanel);
+      buttonPanel.setVisible (true);
+      
+      // Create the button object to create the commision slip page.
+      calculateButton = new JButton("Calculate");
+      calculateButton.setLayout (null);
+      calculateButton.setBounds (487,37,100,25);
+      calculateButton.addActionListener (this);
+      buttonPanel.add (calculateButton);
+      calculateButton.setVisible (true);
+      
+      // Create the refresh button object to refresh the page.
+      refreshButton = new JButton("Refresh");
+      refreshButton.setLayout (null);
+      refreshButton.setBounds (275,37,100,25);
+      refreshButton.addActionListener (this);
+      buttonPanel.add (refreshButton);
+      refreshButton.setVisible (true);
+      
+      // Create the refresh button object to refresh the page.
+      exitButton = new JButton("Exit");
+      exitButton.setLayout (null);
+      exitButton.setBounds (62,37,100,25);
+      buttonPanel.add (exitButton);
+      exitButton.addActionListener (this);
+      exitButton.setVisible (true);
+        
+      // Make the frame visible
+      frame.setVisible (true);
+  }
+  
+  
+  // Action performed method
+  public void actionPerformed(ActionEvent event)
+  {
+     int response;
+     // Create the code for the exit button
+     if ( event.getSource() == exitButton )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // Do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the secondary exit button.
+     if ( event.getSource() == exit2Button )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // Do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the refresh button.
+     if ( event.getSource() == refreshButton )
+     {
+        salesAdvisorNameInput.setText ("");
+        salesVolumeInput.setText ("");
+        salesTotalValueInput.setText ("");  
+     }
+     
+     // Create the code for the calculate button
+     if ( event.getSource() == calculateButton )
+     {  
+        // Create an statement for exception handling if the text field is empty
+        if (salesAdvisorNameInput.getText().equals(""))
+        {
+            salesAdvisorNameInput.setText("N/A");
+        }
+        // Create an statement for exception handling if the text field is empty.
+        else if (salesVolumeInput.getText().equals(""))
+        {
+            salesVolumeInput.setText("0");
+        }
+        // Create an statement for exception handling if the text field is empty
+        else if (salesTotalValueInput.getText().equals(""))
+        {
+          salesTotalValueInput.setText("0");
+        }
+        
+
+        // Define the information from the input box for the advisor name as string and give it the name "adName".
+        String adName;
+        adName = (String) salesAdvisorNameInput.getText();
+
+        // Define the information from the sales volume box as a string and give it the name "saleVolume".
+        int saleVolInt;
+        String saleVolume;
+        saleVolume = (String) salesVolumeInput.getText();
+        saleVolInt = Integer.valueOf(saleVolume);
+        
+        // Define the information from the sales value box as an string and then change it to an integer and give it the name "saleValue".
+        double saleValue = 0;
+        
+        String strSaleValue = (String) salesTotalValueInput.getText();
+        saleValue = Integer.valueOf(strSaleValue);
+        
+        // Create the variable integer for the sales commision amount.
+        double commValue = 0;
+        
+        // Create the variable integer for the sales commision percentage
+        double commPerc = 0;
+        
+        // Create the if statement to work out what percentage of commision the advisor is due.
+        if (saleValue >= 0 && saleValue <= 19999)
+        {
+            commValue = 0;
+            commPerc = 0;
+        }
+        else if (saleValue >= 20000 && saleValue <= 30999)
+        {
+            commValue = (saleValue/100*5);
+            commPerc = 5;
+        }
+        else if (saleValue >= 31000 && saleValue <= 45999)
+        {
+            commValue = (saleValue/100*10);
+            commPerc = 10;
+        }
+        else if (saleValue >= 46000 && saleValue <= 59999)
+        {
+            commValue = (saleValue/100*12);
+            commPerc = 12;
+        }
+        else if (saleValue >= 60000)
+        {
+            commValue = (saleValue/100*15);
+            commPerc = 15;
+        }
+        
+        // Create commision slip panel ready for the information to be processed from the initial screen.
+        commPanel = new JPanel();
+        commPanel.setLayout (null);
+        commPanel.setBounds (20,20,690,570);
+        commPanel.setBorder (beveledBorder2);
+        frame.add (commPanel);
+        commPanel.setVisible (true);
+        commPanel.revalidate();
+        commPanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the commision slip panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        commPanel.add (top2Panel);
+        
+        // Create the label for the commision slip top panel.
+        header2Label = new JLabel("Salesperson Commision Slip", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        commPanel.add (info2Panel);
+        
+        // Create the button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the commision calculator main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+        
+        // Create the results label which will display the calculated information from the first page
+        resultsLabel = new JTextArea("Sales advisor: "+adName+"\nSales volume: "+saleVolume+"\nSales value: £"+saleValue+"\nCommission owed: £"+commValue+
+        "\nCommission rate: "+commPerc+"%");
+        resultsLabel.setOpaque (false);
+        resultsLabel.setLayout (null);
+        resultsLabel.setBounds (20,20,630,100);
+        info2Panel.add (resultsLabel);
+        resultsLabel.setFont (font2);
+        resultsLabel.setVisible (true);
+        
+        // Create an IF statement for exception handling
+        if (saleValue < 0)
+        {
+          resultsLabel.setText ("ERROR: NEGATIVE NUMBER CANNOT BE INPUT"); 
+          resultsLabel.setForeground (Color.RED);
+        }
+        
+        // Create an IF statement for exception handling
+        if ( saleVolInt < 0)
+        {
+          resultsLabel.setText ("ERROR: NEGATIVE NUMBER CANNOT BE INPUT"); 
+          resultsLabel.setForeground (Color.RED);
+        }
+        
+        
+     }
+     
+     // Create the code for the return button.
+     if ( event.getSource() == returnButton )
+     {
+        commPanel.setVisible (false);
+        mainPanel.setVisible (true);
+        salesAdvisorNameInput.setText ("");
+        salesVolumeInput.setText ("");
+        salesTotalValueInput.setText ("");  
+     }
+
+  }       
+  
+  // Main() method - execution starts here
+  public static void main(String[] args)
+  {
+     // Create an Commission Calculator Object.
+      CommissionCalculator go = new CommissionCalculator();
+  }
+ 
+}  

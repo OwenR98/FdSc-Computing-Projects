@@ -1,0 +1,547 @@
+/**
+ * Multi-Task
+ * 
+ * Date 28/12/2019
+ * 
+ * Author: Owen Ramsey
+ * 
+ * Bournemouth University
+ * 
+ * This program is made to display odd integers between 1-29, the squares of even integers between 2-20, the sum of the sqaures of odd integers between 1-13 and to display the alphabet in upper
+ * and lower case
+ */
+
+// Import items from the java library
+
+import javax.swing.*;       // JFrame, JLabel, JComboBox, ---- etc
+import java.awt.*;          // Font
+import javax.swing.border.*;// Border, BorderFactory
+import java.awt.event.*;    // ActionListener, ActionEvent
+import java.awt.color.*;    // Allows for colour change on the font
+
+public class ADQ5 implements ActionListener
+{
+  // Data items -
+  private JFrame frame;
+  private JPanel topPanel,infoPanel,mainPanel,buttonPanel,resultPanel,top2Panel,info2Panel,button2Panel;
+  private JLabel headerLabel,header2Label;
+  private Border beveledBorder1,beveledBorder2;
+  //private JTextField 
+  private Font font1,font2,font3;
+  private JButton calculateButton,exitButton,exit2Button,returnButton,aButton,bButton,cButton,dButton;
+  private JTextArea resultLabel;
+  
+  
+  // Constructor
+  public ADQ5()
+  {
+      // Create font classes for use later in the code.
+      font1 = new Font("TIMESNEWROMAN", Font.BOLD, 30);
+      font2 = new Font("TIMESNEWROMAN", Font.PLAIN, 20);
+      font3 = new Font("TIMESNEWROMAN", Font.BOLD, 20);
+      
+      
+      // Create the border classes for later use in the code.
+      beveledBorder1 = BorderFactory.createRaisedBevelBorder();
+      beveledBorder2 = BorderFactory.createLoweredBevelBorder();
+      
+      // Create the initial frame.
+      frame = new JFrame("Task 5");
+      frame.setBounds (10,10,750,650);
+      frame.setLayout(null);
+          
+      // Build the main panel and the border for the panel.
+      mainPanel = new JPanel();
+      mainPanel.setBounds (20,20,690,570);
+      mainPanel.setLayout(null);
+      mainPanel.setBorder (beveledBorder2);
+      frame.add (mainPanel);
+      
+      // Create the top panel and the border for the panel.
+      topPanel = new JPanel();
+      topPanel.setBounds (10,10,670,120);
+      topPanel.setLayout(null);
+      topPanel.setBorder (beveledBorder1);
+      mainPanel.add (topPanel);
+      
+      // Create top panel J Label for header and position it in the center of the top panel.
+      headerLabel = new JLabel("Task 5", SwingConstants.CENTER);
+      headerLabel.setLayout(null);
+      headerLabel.setBounds(10,10,670,100);
+      topPanel.add (headerLabel);
+      headerLabel.setFont(font1);
+      
+      // Create panel which all of the information will be inputted onto, this will also have all the buttons on it.
+      infoPanel = new JPanel();
+      infoPanel.setBounds (10,140,670,420);
+      infoPanel.setLayout (null);
+      infoPanel.setBorder (beveledBorder1);
+      mainPanel.add (infoPanel);
+      
+      // Create the button which will run task a.
+      aButton = new JButton("task A");
+      aButton.setLayout (null);
+      aButton.setBounds (10,10,300,100);
+      aButton.addActionListener (this);
+      infoPanel.add (aButton);
+      aButton.setVisible (true);
+      
+      // Create the button which will run task b.
+      bButton = new JButton("task B");
+      bButton.setLayout (null);
+      bButton.setBounds (360,10,300,100);
+      bButton.addActionListener (this);
+      infoPanel.add (bButton);
+      bButton.setVisible (true);
+      
+      // Create the button which will run task c.
+      cButton = new JButton("task C");
+      cButton.setLayout (null);
+      cButton.setBounds (10,160,300,100);
+      cButton.addActionListener (this);
+      infoPanel.add (cButton);
+      cButton.setVisible (true);
+      
+      // Create the button which will run task d.
+      dButton = new JButton("task D");
+      dButton.setLayout (null);
+      dButton.setBounds (360,160,300,100);
+      dButton.addActionListener (this);
+      infoPanel.add (dButton);
+      dButton.setVisible (true);
+      
+      // Create the button panel for the buttons to go onto which will be on top of the info panel.
+      buttonPanel = new JPanel();
+      buttonPanel.setLayout (null);
+      buttonPanel.setBounds (10,310,650,100);
+      buttonPanel.setBorder (beveledBorder2);
+      infoPanel.add (buttonPanel);
+      buttonPanel.setVisible (true);
+      
+      
+      // Create the refresh button object to exit the page.
+      exitButton = new JButton("Exit");
+      exitButton.setLayout (null);
+      exitButton.setBounds (1,1,649,98);
+      buttonPanel.add (exitButton);
+      exitButton.addActionListener (this);
+      exitButton.setVisible (true);
+        
+      // Make the frame visible
+      frame.setVisible (true);
+  }
+  
+  
+  // action performed method
+  public void actionPerformed(ActionEvent event)
+  {
+     int response;
+     // Create the code for the exit button
+     if ( event.getSource() == exitButton )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the secondary exit button.
+     if ( event.getSource() == exit2Button )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // Do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the a button
+     if ( event.getSource() == aButton )
+     {
+
+        // Create result panel.
+        resultPanel = new JPanel();
+        resultPanel.setLayout (null);
+        resultPanel.setBounds (20,20,690,570);
+        resultPanel.setBorder (beveledBorder2);
+        frame.add (resultPanel);
+        resultPanel.setVisible (true);
+        resultPanel.revalidate();
+        resultPanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the result panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        resultPanel.add (top2Panel);
+        
+        // Create the label for the task top panel.
+        header2Label = new JLabel("Task 5 SubTask A", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        resultPanel.add (info2Panel);
+        
+        // Create the result label for the information to go into.
+        resultLabel = new JTextArea();
+        resultLabel.setBounds (10,10,350,300);
+        info2Panel.add (resultLabel);
+        
+        // Define n as 29.
+        int n = 29;
+        
+        resultLabel.append("the odd integers between 1 and 29 are:\n");
+        // Create the for loop to get the odd numbers.
+        for (int i = 1; i <= n; i++)
+        {
+            if (i % 2 != 0)
+            {
+              resultLabel.append("" + i + "\n");
+              
+            }
+        }
+        
+        // Create the 2nd button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the commision calculator main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+        
+        
+     }
+     
+     
+     // Create the code for the b button
+     if ( event.getSource() == bButton )
+     {
+
+        // Create result panel.
+        resultPanel = new JPanel();
+        resultPanel.setLayout (null);
+        resultPanel.setBounds (20,20,690,570);
+        resultPanel.setBorder (beveledBorder2);
+        frame.add (resultPanel);
+        resultPanel.setVisible (true);
+        resultPanel.revalidate();
+        resultPanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the result panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        resultPanel.add (top2Panel);
+        
+        // Create the label for the task top panel.
+        header2Label = new JLabel("Task 5 SubTask B", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        resultPanel.add (info2Panel);
+        
+        // Create the result label for the information to go into.
+        resultLabel = new JTextArea();
+        resultLabel.setBounds (10,10,350,300);
+        info2Panel.add (resultLabel);
+        
+        // Define n as 29.
+        int n = 20;
+        
+        resultLabel.append("The squares of the even numbers between 2 and 20 are:\n");
+        // Create the for loop to get the odd numbers.
+        for (int i = 2; i <= n; i++)
+        {
+            if (i % 2 == 0)
+            {
+              resultLabel.append("" + i*i + "\n");
+              
+            }
+        }
+        
+        // Create the 2nd button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the commision calculator main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+        
+        
+     }
+     
+     // Create the code for the c button
+     if ( event.getSource() == cButton )
+     {
+
+        // Create result panel.
+        resultPanel = new JPanel();
+        resultPanel.setLayout (null);
+        resultPanel.setBounds (20,20,690,570);
+        resultPanel.setBorder (beveledBorder2);
+        frame.add (resultPanel);
+        resultPanel.setVisible (true);
+        resultPanel.revalidate();
+        resultPanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the result panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        resultPanel.add (top2Panel);
+        
+        // Create the label for the task top panel.
+        header2Label = new JLabel("Task 5 SubTask C", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        resultPanel.add (info2Panel);
+        
+        // Create the result label for the information to go into.
+        resultLabel = new JTextArea();
+        resultLabel.setBounds (10,10,350,300);
+        info2Panel.add (resultLabel);
+        
+        // Define n as 13.
+        int n = 13;
+        
+        // Define sum as 0
+        int sum = 0;
+        
+        // Create the for loop to get the odd numbers.
+        for (int i = 1; i <= n; i++)
+        {
+            if (i % 2 != 0)
+            {
+              resultLabel.append("" + i*i + "\n");
+              sum = sum + (i*i);
+            }
+        }
+        resultLabel.append("The sum of the of the squares of the odd integers \nbetween 1 and 13 is " +sum+ "");
+        
+        // Create the 2nd button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the commision calculator main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+        
+        
+     }
+     
+     // Create the code for the d button
+     if ( event.getSource() == dButton )
+     {
+
+        // Create result panel.
+        resultPanel = new JPanel();
+        resultPanel.setLayout (null);
+        resultPanel.setBounds (20,20,690,570);
+        resultPanel.setBorder (beveledBorder2);
+        frame.add (resultPanel);
+        resultPanel.setVisible (true);
+        resultPanel.revalidate();
+        resultPanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the result panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        resultPanel.add (top2Panel);
+        
+        // Create the label for the task top panel.
+        header2Label = new JLabel("Task 5 SubTask D", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        resultPanel.add (info2Panel);
+        
+        // Create the result label for the information to go into.
+        resultLabel = new JTextArea();
+        resultLabel.setBounds (10,10,650,300);
+        info2Panel.add (resultLabel);
+        
+        // Create the for loop to get the odd numbers.
+        for (char Alphabet = 'a'; Alphabet <= 'z'; Alphabet ++)
+        {
+            
+            
+              resultLabel.append("" + Alphabet + ",");
+              
+        
+        }
+        
+        resultLabel.append("\n");
+        
+        // Create the for loop to get the odd numbers.
+        for (char Alphabet = 'A'; Alphabet <= 'Z'; Alphabet ++)
+        {
+            
+              
+              resultLabel.append("" + Alphabet + ",");
+              
+        
+        }
+        
+        
+        // Create the 2nd button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the commision calculator main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+        
+        
+     }
+     // Create the code for the return button.
+     if ( event.getSource() == returnButton )
+     {
+        resultPanel.setVisible (false);
+        mainPanel.setVisible (true);
+         
+     }
+
+  }       
+  
+  // Main() method - execution starts here
+  public static void main(String[] args)
+  {
+     // Create an object from LeapYear
+      ADQ5 go;  
+      go = new ADQ5();
+  }
+ 
+}  

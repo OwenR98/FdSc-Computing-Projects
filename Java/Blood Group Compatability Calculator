@@ -1,0 +1,300 @@
+/**
+ * Blood Group Calculator
+ * 
+ * Date 02/03/2020
+ * 
+ * Author: Owen Ramsey
+ * 
+ * Bournemouth University
+ * 
+ * This program is made to show the user what blood types are compatable.
+ * 
+ */
+
+// Import items from the java library
+
+import javax.swing.*;       // JFrame, JLabel, JComboBox, ---- etc
+import java.awt.*;          // Font
+import javax.swing.border.*;// Border, BorderFactory
+import java.awt.event.*;    // ActionListener, ActionEvent
+import java.awt.color.*;    // Allows for colour change on the font
+
+public class BloodGroup implements ActionListener
+{
+  // Data items -
+  private JFrame frame;
+  private JPanel topPanel,infoPanel,mainPanel,buttonPanel,gradePanel,top2Panel,info2Panel,button2Panel;
+  private JLabel headerLabel,header2Label;
+  private Border beveledBorder1,beveledBorder2;
+  private JTextField inputField; 
+  private Font font1,font2,font3;
+  private JButton goButton,exitButton,exit2Button,returnButton,enterButton;
+  private JTextArea resultLabel;
+  private JComboBox bloodBox;
+  // Constructor
+  public BloodGroup()
+  {
+      // Create font classes for use later in the code.
+      font1 = new Font("TIMESNEWROMAN", Font.BOLD, 30);
+      font2 = new Font("TIMESNEWROMAN", Font.PLAIN, 20);
+      font3 = new Font("TIMESNEWROMAN", Font.BOLD, 20);
+      
+      
+      // Create the border classes for later use in the code.
+      beveledBorder1 = BorderFactory.createRaisedBevelBorder();
+      beveledBorder2 = BorderFactory.createLoweredBevelBorder();
+      
+      // Create the initial frame.
+      frame = new JFrame("Blood Type Calculator");
+      frame.setBounds (10,10,750,650);
+      frame.setLayout(null);
+          
+      // Build the main panel and the border for the panel.
+      mainPanel = new JPanel();
+      mainPanel.setBounds (20,20,690,570);
+      mainPanel.setLayout(null);
+      mainPanel.setBorder (beveledBorder2);
+      frame.add (mainPanel);
+      
+      // Create the top panel and the border for the panel.
+      topPanel = new JPanel();
+      topPanel.setBounds (10,10,670,120);
+      topPanel.setLayout(null);
+      topPanel.setBorder (beveledBorder1);
+      mainPanel.add (topPanel);
+      
+      // Create top panel J Label for header and position it in the center of the top panel.
+      headerLabel = new JLabel("Blood Type Calculator", SwingConstants.CENTER);
+      headerLabel.setLayout(null);
+      headerLabel.setBounds(10,10,670,100);
+      topPanel.add (headerLabel);
+      headerLabel.setFont(font1);
+      
+      // Create panel which all of the information will be inputted onto, this will also have all the buttons on it.
+      infoPanel = new JPanel();
+      infoPanel.setBounds (10,140,670,420);
+      infoPanel.setLayout (null);
+      infoPanel.setBorder (beveledBorder1);
+      mainPanel.add (infoPanel);
+
+      // Create the button panel for the buttons to go onto which will be on top of the info panel.
+      buttonPanel = new JPanel();
+      buttonPanel.setLayout (null);
+      buttonPanel.setBounds (10,310,650,100);
+      buttonPanel.setBorder (beveledBorder2);
+      infoPanel.add (buttonPanel);
+      buttonPanel.setVisible (true);
+      
+      // Create the button object to create the commision slip page.
+      goButton = new JButton("Let's GO!");
+      goButton.setLayout (null);
+      goButton.setBounds (5,5,660,290);
+      goButton.addActionListener (this);
+      infoPanel.add (goButton);
+      goButton.setVisible (true);
+      
+      // Create the refresh button object to exit the page.
+      exitButton = new JButton("Exit");
+      exitButton.setLayout (null);
+      exitButton.setBounds (62,37,100,25);
+      buttonPanel.add (exitButton);
+      exitButton.addActionListener (this);
+      exitButton.setVisible (true);
+        
+      // Make the frame visible
+      frame.setVisible (true);
+  }
+  
+  
+  // action performed method
+  public void actionPerformed(ActionEvent event)
+  {
+     int response;
+     int x= 0;
+     // Create the code for the exit button
+     if ( event.getSource() == exitButton )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the secondary exit button.
+     if ( event.getSource() == exit2Button )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // Do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the go button.
+     if ( event.getSource() == goButton )
+     {
+        // Create blood group panel.
+        gradePanel = new JPanel();
+        gradePanel.setLayout (null);
+        gradePanel.setBounds (20,20,690,570);
+        gradePanel.setBorder (beveledBorder2);
+        frame.add (gradePanel);
+        gradePanel.setVisible (true);
+        gradePanel.revalidate();
+        gradePanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the blood group panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        gradePanel.add (top2Panel);
+        
+        // Create the label for the blood group top panel.
+        header2Label = new JLabel("Blood Type Calculator", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        gradePanel.add (info2Panel);
+        
+        // Create the result label for the inputted text.
+        resultLabel = new JTextArea();
+        resultLabel.setFont (font2);
+        resultLabel.setBounds(5,5,660,275);
+        resultLabel.setEditable(false);
+        info2Panel.add (resultLabel);
+        
+        // Create the combobox for the user to select their bloodtype into.
+        bloodBox = new JComboBox();
+        bloodBox.addItem("O-");
+        bloodBox.addItem("O+");
+        bloodBox.addItem("A-");
+        bloodBox.addItem("A+");
+        bloodBox.addItem("B-");
+        bloodBox.addItem("B+");
+        bloodBox.addItem("AB-");
+        bloodBox.addItem("AB+");
+        bloodBox.setBounds(5,285,600,25);
+        info2Panel.add(bloodBox);
+        
+        // Create the enter button for the user to click when they add a number into the textbox.
+        enterButton = new JButton("Enter");
+        enterButton.setBounds(600,285,70,25);
+        enterButton.addActionListener (this);
+        info2Panel.add(enterButton);
+        
+        // Create the button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the commision calculator main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+     }
+     // Create the code for all the average calculations when the enter button is pressed etc
+     if ( event.getSource() == enterButton )
+     {
+        resultLabel.setText("");
+         String bg;
+        bg = (String) bloodBox.getSelectedItem() ;
+        
+        if (bg == "O-")
+        {
+            resultLabel.append(" For blood group type O- the acceptable donor blood group \n types are: \n O- \n");
+        }
+        else if (bg == "O+")
+        {
+            resultLabel.append(" For blood group type O+ the acceptable donor blood group \n types are: \n O- , O+ \n");
+        }
+        else if (bg == "A-")
+        {
+            resultLabel.append(" For blood group type A- the acceptable donor blood group \n types are: \n O- , A- \n");
+        }
+        else if (bg == "A+")
+        {
+            resultLabel.append(" For blood group type A+ the acceptable donor blood group \n types are: \n O- , O+ , A- , A+ \n");
+        }
+        else if (bg == "B-")
+        {
+            resultLabel.append(" For blood group type B- the acceptable donor blood group \n types are: \n O- , B- \n");
+        }
+        else if (bg == "B+")
+        {
+            resultLabel.append(" For blood group type B+ the acceptable donor blood group \n types are: \n O- , O+ , B- , B+ \n");
+        }
+        else if (bg == "AB-")
+        {
+            resultLabel.append(" For blood group type AB- the acceptable donor blood group \n types are: \n O- , A- , B- , AB- \n");
+        }
+        else if (bg == "AB+")
+        {
+            resultLabel.append(" For blood group type AB+ the acceptable donor blood group \n types are: \n O- , 0+ , A- , A+ , B- , B+ , AB- , AB+ \n");
+        }
+     }
+     // Create the code for the return button.
+     if ( event.getSource() == returnButton )
+     {
+        gradePanel.setVisible (false);
+        mainPanel.setVisible (true); 
+     }
+
+  }       
+  
+  // Main() method - execution starts here
+  public static void main(String[] args)
+  {
+     // Create an object from LeapYear
+      BloodGroup go;  
+      go = new BloodGroup();
+  }
+ 
+}  

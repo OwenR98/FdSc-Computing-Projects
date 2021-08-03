@@ -1,0 +1,424 @@
+/**
+ * Grade calculator
+ * 
+ * Date 28/12/2019
+ * 
+ * Author: Owen Ramsey
+ * 
+ * Bournemouth University
+ * 
+ * This program is made to recieve the marks a student recieved from their exam and assignment and output the grade they achieved.
+ * 
+ * Basic Rules
+ *  0-39  = Grade f
+ * 40-49  = Grade C
+ * 50-59  = Grade B
+ * 60-69  = Grade B+
+ * 70-100 = Grade A
+ */
+
+// Import items from the java library
+
+import javax.swing.*;       // JFrame, JLabel, JComboBox, ---- etc
+import java.awt.*;          // Font
+import javax.swing.border.*;// Border, BorderFactory
+import java.awt.event.*;    // ActionListener, ActionEvent
+import java.awt.color.*;    // Allows for colour change on the font
+
+public class GradeAssigner implements ActionListener
+{
+  // Data items -
+  private JFrame frame;
+  private JPanel topPanel,infoPanel,mainPanel,buttonPanel,gradePanel,top2Panel,info2Panel,button2Panel;
+  private JLabel headerLabel,header2Label,studentLabel,assignmentLabel,examLabel;
+  private Border beveledBorder1,beveledBorder2;
+  private JTextField studentNameInput,assignmentInput,examInput; 
+  private Font font1,font2,font3;
+  private JButton calculateButton,refreshButton,exitButton,exit2Button,returnButton;
+  private JTextArea resultsLabel;
+  
+  
+  // Constructor
+  public GradeAssigner()
+  {
+      // Create font classes for use later in the code.
+      font1 = new Font("TIMESNEWROMAN", Font.BOLD, 30);
+      font2 = new Font("TIMESNEWROMAN", Font.PLAIN, 20);
+      font3 = new Font("TIMESNEWROMAN", Font.BOLD, 20);
+      
+      
+      // Create the border classes for later use in the code.
+      beveledBorder1 = BorderFactory.createRaisedBevelBorder();
+      beveledBorder2 = BorderFactory.createLoweredBevelBorder();
+      
+      // Create the initial frame.
+      frame = new JFrame("Student Grade Calculator");
+      frame.setBounds (10,10,750,650);
+      frame.setLayout(null);
+          
+      // Build the main panel and the border for the panel.
+      mainPanel = new JPanel();
+      mainPanel.setBounds (20,20,690,570);
+      mainPanel.setLayout(null);
+      mainPanel.setBorder (beveledBorder2);
+      frame.add (mainPanel);
+      
+      // Create the top panel and the border for the panel.
+      topPanel = new JPanel();
+      topPanel.setBounds (10,10,670,120);
+      topPanel.setLayout(null);
+      topPanel.setBorder (beveledBorder1);
+      mainPanel.add (topPanel);
+      
+      // Create top panel J Label for header and position it in the center of the top panel.
+      headerLabel = new JLabel("Student Grade Calculator", SwingConstants.CENTER);
+      headerLabel.setLayout(null);
+      headerLabel.setBounds(10,10,670,100);
+      topPanel.add (headerLabel);
+      headerLabel.setFont(font1);
+      
+      // Create panel which all of the information will be inputted onto, this will also have all the buttons on it.
+      infoPanel = new JPanel();
+      infoPanel.setBounds (10,140,670,420);
+      infoPanel.setLayout (null);
+      infoPanel.setBorder (beveledBorder1);
+      mainPanel.add (infoPanel);
+      
+      // Create the student name input label for the user.
+      studentLabel = new JLabel("Input Students Name :");
+      studentLabel.setBounds (20,50,300,50);
+      studentLabel.setLayout (null);
+      infoPanel.add (studentLabel);
+      studentLabel.setFont(font3);
+      
+      // Create the student text box for the user to input.
+      studentNameInput = new JTextField();
+      studentNameInput.setBounds (400,65,200,25);
+      studentNameInput.setLayout (null);
+      infoPanel.add (studentNameInput);
+      studentNameInput.setVisible (true);
+      
+      // Create the assignment label for the user to input.
+      assignmentLabel = new JLabel("Input Assignment Mark :");
+      assignmentLabel.setBounds (20,150,350,50);
+      assignmentLabel.setLayout (null);
+      infoPanel.add (assignmentLabel);
+      assignmentLabel.setFont(font3);
+      
+      // Create the assignment input for the user to select.
+      assignmentInput = new JTextField();
+      assignmentInput.setBounds (400,165,200,25);
+      assignmentInput.setLayout (null);
+      infoPanel.add (assignmentInput);
+      assignmentInput.setVisible (true);
+      
+      // Create the exam label for the user to input.
+      examLabel = new JLabel("Input Exam Mark :");
+      examLabel.setBounds (20,250,300,50);
+      examLabel.setLayout (null);
+      infoPanel.add (examLabel);
+      examLabel.setFont(font3);
+      
+      // Create the exam text box for the user to input.
+      examInput = new JTextField();
+      examInput.setBounds (400,265,200,25);
+      examInput.setLayout (null);
+      infoPanel.add (examInput);
+      examInput.setVisible (true);
+      
+      // Create the button panel for the buttons to go onto which will be on top of the info panel.
+      buttonPanel = new JPanel();
+      buttonPanel.setLayout (null);
+      buttonPanel.setBounds (10,310,650,100);
+      buttonPanel.setBorder (beveledBorder2);
+      infoPanel.add (buttonPanel);
+      buttonPanel.setVisible (true);
+      
+      // Create the button object to create the grade page.
+      calculateButton = new JButton("Calculate");
+      calculateButton.setLayout (null);
+      calculateButton.setBounds (487,37,100,25);
+      calculateButton.addActionListener (this);
+      buttonPanel.add (calculateButton);
+      calculateButton.setVisible (true);
+      
+      // Create the refresh button object to refresh the page.
+      refreshButton = new JButton("Refresh");
+      refreshButton.setLayout (null);
+      refreshButton.setBounds (275,37,100,25);
+      refreshButton.addActionListener (this);
+      buttonPanel.add (refreshButton);
+      refreshButton.setVisible (true);
+      
+      // Create the refresh button object to exit the page.
+      exitButton = new JButton("Exit");
+      exitButton.setLayout (null);
+      exitButton.setBounds (62,37,100,25);
+      buttonPanel.add (exitButton);
+      exitButton.addActionListener (this);
+      exitButton.setVisible (true);
+        
+      // Make the frame visible
+      frame.setVisible (true);
+  }
+  
+  
+  // action performed method
+  public void actionPerformed(ActionEvent event)
+  {
+     int response;
+     // Create the code for the exit button
+     if ( event.getSource() == exitButton )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the secondary exit button.
+     if ( event.getSource() == exit2Button )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // Do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the refresh button.
+     if ( event.getSource() == refreshButton )
+     {
+        studentNameInput.setText ("");
+        assignmentInput.setText("");
+        examInput.setText ("");  
+     }
+     
+     // Create the code for the calculate button
+     if ( event.getSource() == calculateButton )
+     {
+        
+        if (studentNameInput.getText().equals(""))
+        {
+            studentNameInput.setText("N/A");
+        }
+        
+        if (examInput.getText().equals(""))
+        {
+            examInput.setText("0");
+        }
+        
+        if (assignmentInput.getText().equals(""))
+        {
+            assignmentInput.setText("0");
+        }
+         
+        // Define the information from the input box for the student name as string and give it the name "studentName".
+        String studentName;
+        studentName = (String) studentNameInput.getText();
+        
+        // Define the information from the assignment box as an string and then change it to an integer and give it the name "assignmentValue".
+        double assignmentValue;
+        String strAssignmentValue = (String) assignmentInput.getText();
+        assignmentValue = Integer.valueOf(strAssignmentValue);
+        
+        // Define the information from the exam box as an string and then change it to an integer and give it the name "examValue".
+        double examValue;
+        String strExamValue = (String) examInput.getText();
+        examValue = Integer.valueOf(strExamValue);
+        
+        // Define the grade result string
+        String finalGrade;
+        finalGrade = "N/A";
+        // Define the final grade integer and the string for it
+        double finalGradeInt;
+        finalGradeInt = examValue + assignmentValue;
+        
+        // create the if statement so that if the final grade is 39 it is rounded to 40
+        if (finalGradeInt == 39)
+        {
+            finalGradeInt = 40;  
+        }
+        
+        // Create the if statement so that if the minimum mark is not achieved but the overall marks is higher than a fail, than the result is moderated to an 39
+        if (finalGradeInt >= 40 && examValue <= 14)
+        {
+            finalGradeInt = 39;
+        }
+        
+        // Create the if statement so that if the minimum mark is not achieved but the overall marks is higher than a fail, than the result is moderated to an 39
+        if (finalGradeInt >= 40 && assignmentValue <= 14)
+        {
+            finalGradeInt = 39;
+        }
+        
+        // Create the if statement which decides what the grade is going to be.
+        if (finalGradeInt >=0 && finalGradeInt <=39)
+        {
+            finalGrade = "F";
+        }
+        else if(finalGradeInt >=40 && finalGradeInt <=49)
+        {
+            finalGrade = "C";
+        }
+        else if (finalGradeInt >=50 && finalGradeInt <=59)
+        {
+            finalGrade = "B";
+        }
+        else if (finalGradeInt >=60 && finalGradeInt <=69)
+        {
+            finalGrade = "B+";
+        }
+        else if (finalGradeInt >=70 && finalGradeInt <=100)
+        {
+            finalGrade = "A";
+        }
+        
+        
+        // Create grade panel ready for the information to be processed from the initial screen.
+        gradePanel = new JPanel();
+        gradePanel.setLayout (null);
+        gradePanel.setBounds (20,20,690,570);
+        gradePanel.setBorder (beveledBorder2);
+        frame.add (gradePanel);
+        gradePanel.setVisible (true);
+        gradePanel.revalidate();
+        gradePanel.repaint();
+        
+        // Make the main Panel invisible to stop buttons and textfields coming through
+        mainPanel.setVisible (false);
+        
+        // Create the heading panel for the commision slip panel.
+        top2Panel = new JPanel();
+        top2Panel.setBounds (10,10,670,120);
+        top2Panel.setLayout(null);
+        top2Panel.setBorder (beveledBorder1);
+        gradePanel.add (top2Panel);
+        
+        // Create the label for the grade top panel.
+        header2Label = new JLabel("Student Grade Calculator", SwingConstants.CENTER);
+        header2Label.setLayout(null);
+        header2Label.setBounds(10,10,670,100);
+        top2Panel.add (header2Label);
+        header2Label.setFont(font1);
+        
+        // Create the main panel for the information and button panel to go onto.
+        info2Panel = new JPanel();
+        info2Panel.setBounds (10,140,670,420);
+        info2Panel.setLayout (null);
+        info2Panel.setBorder (beveledBorder1);
+        gradePanel.add (info2Panel);
+        
+        // Create the button panel and add it to the info panel.
+        button2Panel = new JPanel();
+        button2Panel.setLayout (null);
+        button2Panel.setBounds (10,310,650,100);
+        button2Panel.setBorder (beveledBorder2);
+        info2Panel.add (button2Panel);
+        button2Panel.setVisible (true);
+        
+        // Create the exit button to exit the program and add it to the button panel.
+        exit2Button = new JButton("Exit");
+        exit2Button.setLayout (null);
+        exit2Button.setBounds (62,37,100,25);
+        button2Panel.add (exit2Button);
+        exit2Button.addActionListener (this);
+        exit2Button.setVisible (true);
+        
+        // Create the return button which will return the user to the student input main screen.
+        returnButton = new JButton("Return");
+        returnButton.setLayout (null);
+        returnButton.setBounds (487,37,100,25);
+        returnButton.addActionListener (this);
+        button2Panel.add (returnButton);
+        returnButton.setVisible (true);
+        
+        // Create the results label which will display the calculated information from the first page
+        resultsLabel = new JTextArea("Student name: "+studentName+"\nTotal mark: "+finalGradeInt+"\nGrade achieved: "+finalGrade+"");
+        resultsLabel.setOpaque (false);
+        resultsLabel.setLayout (null);
+        resultsLabel.setBounds (20,20,630,100);
+        info2Panel.add (resultsLabel);
+        resultsLabel.setFont (font2);
+        resultsLabel.setVisible (true);
+        
+        
+        // Create the IF statement that will auto fail the student if they do not achieve 14 marks
+        if (finalGradeInt <= 39 && assignmentValue <= 14)
+        {
+          resultsLabel.setText(""+studentName+" has failed due to not achieving the minimum mark \n of 15 in the assignment, exam or both and has recieved\n a technical fail mark of 39.");
+        }
+        
+        // Create the IF statement that will auto fail the student if they do not achieve 14 marks
+        if (finalGradeInt <= 39 && examValue <= 14)
+        {
+          resultsLabel.setText(""+studentName+" has failed due to not achieving the minimum mark \n of 15 in the exam, assignment or both and has recieved\na technical fail mark of 39.");  
+        }
+        
+        // Create an IF statement for exception handling
+        if (examValue < 0)
+        {
+          resultsLabel.setText ("ERROR: NUMBER INPUT IS NOT WITHIN 0-50 RANGE"); 
+          resultsLabel.setForeground (Color.RED);
+        }
+        if (examValue > 50)
+        {
+          resultsLabel.setText ("ERROR: NUMBER INPUT IS NOT WITHIN 0-50 RANGE"); 
+          resultsLabel.setForeground (Color.RED); 
+        }
+        if (assignmentValue < 0)
+        {
+          resultsLabel.setText ("ERROR: NUMBER INPUT IS NOT WITHIN 0-50 RANGE"); 
+          resultsLabel.setForeground (Color.RED); 
+        }
+        if (assignmentValue > 50)
+        {
+          resultsLabel.setText ("ERROR: NUMBER INPUT IS NOT WITHIN 0-50 RANGE"); 
+          resultsLabel.setForeground (Color.RED); 
+        }
+     }
+     
+     // Create the code for the return button.
+     if ( event.getSource() == returnButton )
+     {
+        gradePanel.setVisible (false);
+        mainPanel.setVisible (true);
+        studentNameInput.setText ("");
+        assignmentInput.setText("");
+        examInput.setText ("");  
+     }
+
+  }       
+  
+  // Main() method - execution starts here
+  public static void main(String[] args)
+  {
+     // Create an object from LeapYear
+      GradeAssigner go;  
+      go = new GradeAssigner();
+  }
+ 
+}  

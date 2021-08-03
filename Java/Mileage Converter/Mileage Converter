@@ -1,0 +1,183 @@
+/**
+ * Miles to Kilometeres conversion tool
+ * 
+ * Date 02/03/2020
+ * 
+ * Author: Owen Ramsey
+ * 
+ * Bournemouth University
+ * 
+ * This program is made to display a table of miles to kilometers calculation within the range of 1-20 miles.
+ * 
+ * Basic Rule: 1 Mile = 1.609 Kilometers.
+ */
+
+// Import items from the java library
+
+import javax.swing.*;       // JFrame, JLabel, JComboBox, ---- etc
+import java.awt.*;          // Font
+import javax.swing.border.*;// Border, BorderFactory
+import java.awt.event.*;    // ActionListener, ActionEvent
+import java.awt.color.*;    // Allows for colour change on the font
+import javax.swing.table.*; // Tables
+import javax.swing.table.DefaultTableModel;
+
+public class MileConverter implements ActionListener
+{
+  // Data items -
+  private JFrame frame;
+  private JPanel topPanel,infoPanel,mainPanel,buttonPanel;
+  private JLabel headerLabel;
+  private Border beveledBorder1,beveledBorder2; 
+  private Font font1;
+  private JButton exitButton,exit2Button;
+  
+  
+  // Constructor
+  public MileConverter()
+  {
+      // Create font classes for use later in the code.
+      font1 = new Font("TIMESNEWROMAN", Font.BOLD, 30);
+      
+      
+      // Create the border classes for later use in the code.
+      beveledBorder1 = BorderFactory.createRaisedBevelBorder();
+      beveledBorder2 = BorderFactory.createLoweredBevelBorder();
+      
+      // Create the initial frame.
+      frame = new JFrame("Mile Converter Tool");
+      frame.setBounds (10,10,750,650);
+      frame.setLayout(null);
+          
+      // Build the main panel and the border for the panel.
+      mainPanel = new JPanel();
+      mainPanel.setBounds (20,20,690,570);
+      mainPanel.setLayout(null);
+      mainPanel.setBorder (beveledBorder2);
+      frame.add (mainPanel);
+      
+      // Create the top panel and the border for the panel.
+      topPanel = new JPanel();
+      topPanel.setBounds (10,10,670,120);
+      topPanel.setLayout(null);
+      topPanel.setBorder (beveledBorder1);
+      mainPanel.add (topPanel);
+      
+      // Create top panel J Label for header and position it in the center of the top panel.
+      headerLabel = new JLabel("Mile Converter Tool", SwingConstants.CENTER);
+      headerLabel.setLayout(null);
+      headerLabel.setBounds(10,10,670,100);
+      topPanel.add (headerLabel);
+      headerLabel.setFont(font1);
+      
+      // Create panel which all of the information will be inputted onto, this will also have all the buttons on it.
+      infoPanel = new JPanel();
+      infoPanel.setBounds (10,140,670,420);
+      infoPanel.setLayout (null);
+      infoPanel.setBorder (beveledBorder1);
+      mainPanel.add (infoPanel);
+
+      // Create the button panel for the buttons to go onto which will be on top of the info panel.
+      buttonPanel = new JPanel();
+      buttonPanel.setLayout (null);
+      buttonPanel.setBounds (10,310,650,100);
+      buttonPanel.setBorder (beveledBorder2);
+      infoPanel.add (buttonPanel);
+      buttonPanel.setVisible (true);
+      
+      // Data to be displayed in the JTable,
+      double[] mile = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+      double[] kilo = { 1.609, 3.218, 4.827, 6.436, 8.045, 9.654, 11.263, 12.872, 14.481, 16.09, 17.699, 19.308, 20.917, 22.526, 24.135, 25.825, 27.434, 29.043, 30.654, 32.261 };
+      
+      // Define the tabledata as double
+      Double[][] tableData = new Double[mile.length][2];
+      
+      // Create the for loop array to display the data in the table
+      for (int i = 0; i < mile.length; i++) {
+        tableData[i][0] = mile[i];
+        tableData[i][1] = kilo[i];
+      }
+
+
+      // Column Names for the table.
+      String[] titles = {"Miles", "Kilometers"};
+
+      // Create the table which is going to display the information.
+      JTable table = new JTable(tableData, titles);
+      table.setFillsViewportHeight(true);
+      JScrollPane scrollPane = new JScrollPane(table);
+      scrollPane.setBounds(20, 20, 650, 250);
+      infoPanel.add(scrollPane);
+      
+      // Create the refresh button object to exit the page.
+      exitButton = new JButton("Exit");
+      exitButton.setLayout (null);
+      exitButton.setBounds (62,37,100,25);
+      buttonPanel.add (exitButton);
+      exitButton.addActionListener (this);
+      exitButton.setVisible (true);
+        
+      // Make the frame visible
+      frame.setVisible (true);
+  }
+  
+  
+  // Action performed method
+  public void actionPerformed(ActionEvent event)
+  {
+     int response;
+     // Create the code for the exit button
+     if ( event.getSource() == exitButton )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     // Create the code for the secondary exit button.
+     if ( event.getSource() == exit2Button )
+     {
+        // Exit the application
+        response = JOptionPane.showConfirmDialog(infoPanel,"Are you sure you want to exit?","exit conformation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                  
+        if (response == JOptionPane.YES_OPTION)
+        {
+          frame.dispose();
+        }
+        else if(response == JOptionPane.NO_OPTION)
+        {
+          // Do nothing
+        }
+        else if ( response == JOptionPane.CLOSED_OPTION)
+        {
+          JOptionPane.showMessageDialog (frame, "You have chosen not to exit the program. You will be returned to the previous screen.");
+        }
+                        
+     }
+     
+     
+
+  }       
+  
+  // Main() method - execution starts here
+  public static void main(String[] args)
+  {
+     // Create an object from LeapYear
+      MileConverter go;  
+      go = new MileConverter();
+  }
+ 
+}  

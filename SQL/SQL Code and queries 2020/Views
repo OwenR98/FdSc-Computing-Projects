@@ -1,0 +1,17 @@
+CREATE VIEW AcademicStaffView AS
+SELECT Staff_ID, Staff_First_Name, Staff_Last_Name, Staff_Tele_Num
+FROM STAFF
+WHERE Department = 'Academic';
+
+CREATE VIEW SupportStaffView AS
+SELECT Staff_ID, Staff_First_Name, Staff_Last_Name, Staff_Tele_Num
+FROM STAFF
+WHERE Department != 'Academic';
+
+CREATE VIEW SkillView AS
+SELECT s.Staff_Id, s.Staff_First_Name, s.Staff_Last_Name, sk.Skill_Name, sk.Pay_Increase
+FROM Staff s
+LEFT JOIN Skills sk
+ON s.Staff_ID = sk.Staff_ID
+WHERE Department != 'Academic'
+ORDER BY Staff_ID;

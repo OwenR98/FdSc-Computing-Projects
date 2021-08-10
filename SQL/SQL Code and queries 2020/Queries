@@ -1,0 +1,108 @@
+
+/* Query 1 - Return list of courses in which units with lecturer names */
+SELECT c.Course_ID, c.Course_Name, c.Unit_Name, c.Staff_ID, s.Staff_First_Name, s.Staff_Last_Name
+FROM Courses c 
+INNER JOIN Staff s
+ON c.staff_ID = s.Staff_ID;
+
+
+/*Query 2 - Return list of full time international students */
+SELECT * from Students
+WHERE Student_type like 'FI';
+
+
+/* Query 3 - Return list of distanced learning international students */
+SELECT * from Students
+WHERE Student_type like 'DI';
+
+
+/* Query 4 - Return list of appointments in date order */
+SELECT * from Interviews
+ORDER by Interview_Date;
+
+
+/* Query 5 - Return list of Staff with number of absences */
+SELECT s.Staff_ID, s.Staff_First_Name, s.Staff_Last_Name, COUNT(a.Staff_Id) AS No_Of_Absences 
+FROM staff S 
+LEFT JOIN Staff_Absence a
+ON s.Staff_ID = a.Staff_ID
+GROUP BY s.Staff_ID, s.Staff_first_name, s.Staff_Last_name
+ORDER BY Staff_ID;
+
+
+/* Query 6 - Return list of Staff with totals of pay to date, in alphabetic order of name */
+SELECT s.Staff_ID, s.Staff_First_Name, s.Staff_Last_Name, sum(p.Payroll_Total) as Total_Pay_To_Date
+From Staff s
+INNER JOIN Payroll p
+ON s.Staff_ID = p.staff_ID
+GROUP BY s.Staff_ID, s.Staff_Last_Name, s.Staff_First_Name
+ORDER BY Staff_Last_Name;
+
+
+/* Query 7 - Return list of skill areas with a count of how many staff are in each */
+SELECT Skill_Name, count(*) as How_Many_Staff 
+FROM Skills
+GROUP BY Skill_Name;
+
+
+/* Query 8 - Return list of support staff showing which skill areas they have */
+SELECT S.Staff_ID, S.Staff_First_Name, s.Staff_Last_Name, k.Skill_name
+FROM Staff s
+LEFT JOIN Skills k
+ON s.Staff_ID = k.Staff_ID
+WHERE Department != 'Academic'
+ORDER BY Staff_ID;
+
+
+/* Query 9 - Return list of full time student names and number of lessons attended by each */
+SELECT s.Student_ID, s.Student_First_name, s.Student_Last_Name, count(a.Attendance_ID) AS No_Of_Attended_Lessons
+FROM Students s
+INNER JOIN Attendance a
+ON s.Student_ID = a.Student_ID
+WHERE (Student_Type LIKE 'F' OR (Student_Type LIKE 'FI') AND Attendance_Mark = 'P')
+GROUP BY s.Student_ID, s.Student_First_Name, s.Student_Last_name
+ORDER BY Student_ID;
+
+
+/* Query 10 - Return list of all staff with name of their immediate line manager */
+SELECT Staff_First_Name, Staff_Last_Name, Line_Manager
+FROM Staff;
+
+
+/* Query 11 - Return list of Distanced Learning Students with names of their academic and pastoral tutors */
+SELECT s.Student_ID, s.Student_First_Name, s.Student_Last_Name, d.Academic_Tutor, d.Pastoral_Tutor
+FROM Students s
+INNER JOIN Distanced_Learning_Students d
+ON s.Student_ID = d.Student_ID;
+
+
+/* Query 12 - Return list of student with description codes */
+SELECT Student_ID, Student_First_Name, Student_Last_Name, Student_Type
+FROM Students;
+
+
+/* Query 13 - Return list of all students showing which lessons they have attended */
+SELECT s.Student_ID, s.Student_First_Name, s.Student_Last_Name, a.Course_ID, c.Course_Name, a.Attendance_Mark
+FROM Students s
+INNER JOIN Attendance a
+ON s.Student_id = a.Student_ID
+INNER JOIN Courses c
+ON a.Course_ID = c.Course_ID
+WHERE a.Attendance_Mark LIKE 'P';
+
+
+/* Query 14 - Return list of support staff showing their overall salary */
+SELECT s.Staff_ID, s.Staff_First_Name, s.Staff_Last_Name, sum(p.Payroll_Total) as Total_Pay_To_Date
+From Staff s
+INNER JOIN Payroll p
+ON s.Staff_ID = p.staff_ID
+WHERE Department != 'Academic'
+GROUP BY s.Staff_ID, s.Staff_Last_Name, s.Staff_First_Name;
+
+
+
+/* Query 15 - Return list of all students showing their names, total course fees and fees paid */
+SELECT s.Student_ID, s.Student_First_Name, s.Student_Last_Name, f.Initial_Fee, f.Amount_Paid
+FROM Students s
+INNER JOIN Fees f
+ON s.Student_ID = f.Student_ID;

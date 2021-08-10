@@ -1,0 +1,343 @@
+/*!
+theme name: Assignment12020
+Theme URI:
+Author: Theme Team
+Author URI:
+Description: Assignment 1 2020 web development theme.
+Version: 1.0
+Licence:
+license URI:
+Text Domain:
+tags:
+*/
+
+.example{
+	position:absolute;
+	top:30%;
+	left:80%;
+}
+@media screen and (max-width: 1850px) {
+   .example {
+    display: none;
+  }
+}
+
+/*  this is the style class which changes the nav bar background to black */
+.bg-dark { 
+    background-color: black!important;
+}
+
+/* This is the style class for the bignews title on the navbar */
+.title {
+background-color: rgb(0,0,0);
+  color: white!important;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  padding-right: 50px;
+  margin-right: 50px;
+}
+
+/* This is the style class for the buttons on the navbar */
+.mainbutton {
+background-color: rgb(0,0,0);
+  border: 10px;
+  border: 2px solid white;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding-left: 75px;
+  padding-right: 75px;
+  margin-left: 0px;
+  margin-right: 150px;
+}
+
+/* This is the style class for the dropdown menu for the navbar */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* This is the style class for the dropdown content on the navbar */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* this is the style class for the dropdown content on the navbar */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* This is the style class for the dropdown content on the navbar */
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* This is the style class for the sticky footer */
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: black;
+color: white;
+text-align: center;
+font-size: 20px;
+}
+
+/* This is a old style class which was initially supposed to be used for the cardclass but is no longer use */
+.align{
+float:left;
+overflow:hidden;
+}
+
+/* This is a old style class which was initially supposed to be used for the cardclass but is no longer use */
+.contact{
+float:left;
+overflow:hidden;
+margin-right: 100px;
+}
+
+/* This is a style class used no longer used */
+.center1 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align:center;
+}
+
+/* This is a style class no longer used */
+.center2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align:center;
+  font-size:20;
+}
+
+/* This is a style class used for for background images */
+.background1{
+z-index:-1;
+position:absolute;
+top:20;
+left:420;
+width:1087;
+height:940;
+}
+
+/* This is a style class used for for background images */
+.background2{
+z-index:-1;
+position:absolute;
+top:280;
+left:0;
+width:418;
+height:676;
+}
+
+/* This is a style class used for for background images */
+.background3{
+z-index:-1;
+position:absolute;
+top:280;
+left:1500;
+width:418;
+height:676;
+}
+
+/* This is a style class used for for background images */
+.background4{
+z-index:-1;
+position:absolute;
+top:730;
+left:0;
+width:1920;
+height:210;
+}
+
+/* This is a style class for the sport Image*/
+.sport{
+z-index:-1;
+position:absolute;
+top:525px;
+left:25px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+/* This is the style class to change the image size on the sport class*/
+.sport:hover{
+transform: scale(1.05);
+}
+
+/* This is a style class for the crime Image*/
+.crime{
+z-index:-1;
+position:absolute;
+top:525px;
+left:510px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+/* This is the style class to change the image size on the crime class*/
+.crime:hover{
+transform: scale(1.05);
+}
+
+/* This is a style class for the weather Image*/
+.weather{
+z-index:-1;
+position:absolute;
+top:525px;
+left:1010px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+/* This is the style class to change the image size on the weather class*/
+.weather:hover{
+transform: scale(1.05);
+}
+
+/* This is a style class for the international Image*/
+.international{
+z-index:-1;
+position:absolute;
+top:525px;
+left:1490px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+/* This is the style class to change the image size on the international class*/
+.international:hover{
+transform: scale(1.05);
+}
+
+
+/* the below classes are for titles for the home page only */
+.sports123{
+z-index:-1;
+color:white;
+position:absolute;
+top:495px;
+left:0px;
+width:400px;
+text-align:center;
+font-size:20px;
+}
+
+
+.crime123{
+z-index:-1;
+color:white;
+position:absolute;
+top:0px;
+left:500px;
+width:400px;
+text-align:center;
+font-size:20px;
+}
+
+
+.weather123{
+z-index:-1;
+color:white;
+position:absolute;
+top:0px;
+left:500px;
+width:400px;
+text-align:center;
+font-size:20px;
+}
+
+
+.international123{
+z-index:-1;
+color:white;
+position:absolute;
+top:0px;
+left:500px;
+width:400px;
+text-align:center;
+font-size:20px;
+}
+
+
+.sport1{
+z-index:-1;
+position:absolute;
+top:35px;
+left:5px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+.sport:hover{
+transform: scale(1.05);
+}
+
+.crime1{
+z-index:-1;
+position:absolute;
+top:35px;
+left:510px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+.crime:hover{
+transform: scale(1.05);
+}
+
+.weather1{
+z-index:-1;
+position:absolute;
+top:35px;
+left:1010px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+.weather:hover{
+transform: scale(1.05);
+}
+
+.international1{
+z-index:-1;
+position:absolute;
+top:35px;
+left:1510px;
+width:390px;
+height:600px;
+padding-bottom:75px;
+}
+
+.international:hover{
+transform: scale(1.05);
+}

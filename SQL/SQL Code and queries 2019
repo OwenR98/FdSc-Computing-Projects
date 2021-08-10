@@ -1,0 +1,550 @@
+/* This is where the tables are created */
+CREATE TABLE SURVEYS (
+  SurveyNo number(20),
+  StaffNo number(20),
+  CustNo number(20),
+  BillAmount number(20),
+  PropertyNo number (20),
+constraint pk_surveys primary key (SurveyNo)
+);
+
+CREATE TABLE PROPERTIES (
+  PropertyNo number (20),
+  BranchNo number (20),
+  AdvertisingID number (20),
+  Address char (50),
+  Askingprice number (20),
+  Furnished char (50),
+  PSize char (50),
+  ViewAmount number (20),
+  ViewID number (20),
+constraint pk_properties primary key (PropertyNo)
+);
+
+CREATE TABLE SALES (
+  ContNo number (20),
+  OwnerNo number (20),
+  CustNo number (20),
+  PriceAgreed number (20),
+  ContractDate date,
+  PropertyNo number (20),
+constraint pk_sales primary key (ContNo)
+);
+
+CREATE TABLE VIEWINGS (
+  ViewID number (20),
+  ViewDate date,
+  CustNo number (20),
+  StaffNo number (20),
+constraint pk_viewings primary key (ViewID)
+);
+
+CREATE TABLE BRANCH (
+  BranchNo number (20),
+  BranchName varchar (20),
+  Address char (50),
+  CTN number (20),
+  FTN number (20),
+  Email char (50),
+constraint pk_branch primary key (BranchNO)
+);
+
+CREATE TABLE ADVERTISING (
+  AdvertisingID number (20),
+  newspaper char (50),
+  website char (50),
+constraint pk_advertising primary key (AdvertisingID)
+);
+
+CREATE TABLE STAFF (
+  StaffNo number (20),
+  SName char (50),
+  Dob date,
+  Address char (50),
+  CTN number (20),
+  NiNo char (50),
+  Salary number (20),
+  Joined date,
+  BranchNo number (20),
+  AppointmentCount number (20),
+constraint pk_staff primary key (StaffNo)
+);
+
+CREATE TABLE OWNERS (
+  OwnerNo number (20),
+  PropertyNo number (20),
+  OName char (50),
+  CTN number (20),
+constraint pk_owners primary key (OwnerNo)
+);
+
+CREATE TABLE CLIENTS (
+  CustNo number (20),
+  CTN number (20),
+  PropertyInterest char (50),
+  DesiredRooms number (20),
+  MaxPrice number (20),
+  SurveyNo number (20),
+constraint pk_clients primary key (CustNo)
+);
+
+CREATE TABLE KITCHEN (
+  KitchenID number (20),
+  PropertyNo number (20),
+  AreaCM2 char (20),
+  Fixtures varchar (100),
+  Fittings varchar (100),
+constraint pk_Kitchen primary key (KitchenID)
+);
+
+CREATE TABLE BEDROOM (
+  BedroomID number (20),
+  PropertyNo number (20),
+  AreaCM2 char (20),
+  Fixtures varchar (100),
+  Fittings varchar (100),
+constraint pk_Bedroom primary key (BedroomID)
+);
+
+CREATE TABLE DINING_ROOM (
+  Dining_roomID number (20),
+  PropertyNo number (20),
+  AreaCM2 char (20),
+  Fixtures varchar (100),
+  Fittings varchar (100),
+constraint pk_Dining_room primary key (Dining_roomID)
+);
+
+CREATE TABLE LIVING_ROOM (
+  Living_roomID number (20),
+  PropertyNo number (20),
+  AreaCM2 char (20),
+  Fixtures varchar (100),
+  Fittings varchar (100),
+constraint pk_Living_room primary key (Living_roomID)
+);
+
+CREATE TABLE BATHROOM (
+  BathroomID number (20),
+  PropertyNo number (20),
+  AreaCM2 char (20),
+  Fixtures varchar (100),
+  Fittings varchar (100),
+constraint pk_Bathroom primary key (BathroomID)
+);
+
+/* this is where the foreign keys are designated to the tables */
+ALTER TABLE kitchen
+ADD CONSTRAINT fk_PropertyNo1
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+  
+ALTER TABLE bedroom
+ADD CONSTRAINT fk_PropertyNo2
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+  
+ALTER TABLE dining_room
+ADD CONSTRAINT fk_PropertyNo3
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+  
+ALTER TABLE living_room
+ADD CONSTRAINT fk_PropertyNo4
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+  
+ALTER TABLE bathroom
+ADD CONSTRAINT fk_PropertyNo5
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+  
+ALTER TABLE sales
+ADD CONSTRAINT fk_PropertyNo6
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+
+ALTER TABLE staff
+ADD CONSTRAINT fk_BranchNo
+  FOREIGN KEY (BranchNo)
+  REFERENCES BRANCH(BranchNo);
+  
+ALTER TABLE properties
+ADD CONSTRAINT fk_BranchNo1
+  FOREIGN KEY (BranchNo)
+  REFERENCES BRANCH(BranchNo);
+  
+ALTER TABLE properties
+ADD CONSTRAINT fk_AdvertisingID
+  FOREIGN KEY (AdvertisingID)
+  REFERENCES ADVERTISING(AdvertisingID);
+  
+ALTER TABLE clients
+ADD CONSTRAINT fk_SurveyNo
+  FOREIGN KEY (SurveyNo)
+  REFERENCES SURVEYS(SurveyNo);
+  
+ALTER TABLE viewings
+ADD CONSTRAINT fk_custno1
+  FOREIGN KEY (custno)
+  REFERENCES CLIENTS(custno);
+  
+ALTER TABLE viewings
+ADD CONSTRAINT fk_StaffNo1
+  FOREIGN KEY (StaffNo)
+  REFERENCES Staff(Staffno);
+  
+ALTER TABLE owners
+ADD CONSTRAINT fk_PropertyNo
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo);
+  
+ALTER TABLE surveys
+ADD CONSTRAINT fk_StaffNo
+  FOREIGN KEY (StaffNo)
+  REFERENCES STAFF(StaffNo);
+  
+ALTER TABLE surveys
+ADD CONSTRAINT fk_CustNo
+  FOREIGN KEY (CustNo)
+  REFERENCES CLIENTS(CustNo);
+  
+ALTER TABLE sales
+ADD CONSTRAINT fk_OwnerNo
+  FOREIGN KEY (OwnerNo)
+  REFERENCES OWNERS(OwnerNo);
+  
+ALTER TABLE sales
+ADD CONSTRAINT fk_CustNo2
+  FOREIGN KEY (CustNo)
+  REFERENCES CLIENTS(CustNo);
+  
+ALTER TABLE surveys
+ADD CONSTRAINT fk_PropertyNo7
+  FOREIGN KEY (PropertyNo)
+  REFERENCES PROPERTIES(PropertyNo); 
+  
+  
+  
+  /* this is where the the tables are populated with data */
+  
+insert into surveys (SurveyNo, BillAmount) values
+   ('1','100');
+   
+insert into surveys (SurveyNo, BillAmount) values
+   ('2','120');
+   
+insert into surveys (SurveyNo, BillAmount) values
+   ('3','95');
+   
+insert into surveys (SurveyNo, BillAmount) values
+   ('4','48');
+   
+insert into properties (propertyno, address, askingprice, furnished, psize, viewamount) values
+   ('1','100 Charming Avenue','10000','Yes','3','12');
+   
+insert into properties (propertyno, address, askingprice, furnished, psize, viewamount) values
+   ('2','101 Charming Avenue','11000','Yes','4','7');
+   
+insert into properties (propertyno, address, askingprice, furnished, psize, viewamount) values
+   ('3','10 Barge Avenue','7000','no','2','3');
+   
+insert into properties (propertyno, address, askingprice, furnished, psize, viewamount) values
+   ('4','27 Walnut Crescent','15000','Yes','3','5');
+   
+insert into sales (contno, priceagreed, contractdate) values
+   ('1','10999', '10-jan-2010');
+   
+insert into sales (contno, priceagreed, contractdate) values
+   ('2','17500', '11-jan-2010');  
+   
+insert into sales (contno, priceagreed, contractdate) values
+   ('3','9500', '23-dec-2009'); 
+   
+insert into sales (contno, priceagreed, contractdate) values
+   ('4','12500', '22-march-2008'); 
+   
+insert into viewings (viewid, viewdate) values
+   ('1','01-jan-2009');
+   
+insert into viewings (viewid, viewdate) values
+   ('2','20-dec-2008'); 
+   
+insert into viewings (viewid, viewdate) values
+   ('3','20-dec-2008'); 
+ 
+insert into viewings (viewid, viewdate) values
+   ('4','11-mar-2008'); 
+   
+insert into branch (branchno, address, ctn, ftn, email) values
+   ('1','17 Business Lane','07940000001','07950000001','branch1@gmail.com');
+   
+insert into branch (branchno, address, ctn, ftn, email) values
+   ('2','42 wallaby way','07940000002','07950000002','Branch2@gmail.com'); 
+   
+insert into branch (branchno, address, ctn, ftn, email) values
+   ('3','63 camel way','07940000003','07950000003','Branch3@gmail.com'); 
+   
+insert into branch (branchno, address, ctn, ftn, email) values
+   ('4','71 warren avenue','07940000004','07950000004','Branch4@gmail.com'); 
+   
+insert into advertising (advertisingid, newspaper, website) values
+   ('1','The Daily mail','www.houses4sale.com');
+   
+insert into advertising (advertisingid, newspaper, website) values
+   ('2','The Sun','www.properties4sale.com'); 
+   
+insert into advertising (advertisingid, newspaper, website) values
+   ('3','the Sun','www.properties4sale.com');
+   
+insert into advertising (advertisingid, newspaper, website) values
+   ('4','The Daily Telegraph','www.houses4sale.com'); 
+   
+insert into staff (staffno, sname, dob, address, ctn, nino, salary, joined, appointmentcount) values
+   ('1','Derek Brown','01-jan-1998','28 Knowles Street','07940111111','p3787878','29999','18-feb-2019','20');
+   
+insert into staff (staffno, sname, dob, address, ctn, nino, salary, joined, appointmentcount) values
+   ('2','john Smith','17-aug-1972','12 Derby Avenue','07940112112','p343434','25000','20-jan-2018','12');
+   
+insert into staff (staffno, sname, dob, address, ctn, nino, salary, joined, appointmentcount) values
+   ('3','Owen Ramsey','07-aug-1998','7 delph way','07940112122','p347734','26000','20-jan-2015','10');
+
+insert into staff (staffno, sname, dob, address, ctn, nino, salary, joined, appointmentcount) values
+   ('4','Steve Phillips','21-march-1972','21 Wally Avenue','07940333112','p3987434','5000','02-jan-2018','1');    
+   
+insert into owners (ownerno, oname, ctn) values
+   ('1','Derek McGee','0940565656');
+   
+insert into owners (ownerno, oname, ctn) values
+   ('2','Jack magee','07940767676');   
+   
+insert into owners (ownerno, oname, ctn) values
+   ('3','Sam Smith','07942167621');
+   
+insert into owners (ownerno, oname, ctn) values
+   ('4','Jack Branning','0794216621');   
+   
+insert into clients (custno, ctn, propertyinterest,desiredrooms,maxprice) values
+   ('1','07790111111','Semi Detatched','3','29000');
+   
+insert into clients (custno, ctn, propertyinterest,desiredrooms,maxprice) values
+   ('2','07790222222','Fully Detatched','4','20000'); 
+   
+insert into clients (custno, ctn, propertyinterest,desiredrooms,maxprice) values
+   ('3','07790222402','Fully Detatched','6','21000'); 
+   
+insert into clients (custno, ctn, propertyinterest,desiredrooms,maxprice) values
+   ('4','07790112402','Fully Detatched','2','12000'); 
+   
+insert into kitchen (kitchenid, areacm2, fixtures, fittings) values
+   ('1','1200','2 Socket Switches', '1 gas range, 1 ventilator, fully fitted cupboards');
+   
+insert into kitchen (kitchenid, areacm2, fixtures, fittings) values
+   ('2','1500','3 socket switches','1 electric hob, washing machine, tumble dryer');
+
+insert into kitchen (kitchenid, areacm2, fixtures, fittings) values
+   ('3','1000','2 Socket Switches', '1 gas range, 1 ventilator, fully fitted cupboards');
+   
+insert into kitchen (kitchenid, areacm2, fixtures, fittings) values
+   ('4','900','1 socket switches','1 electric hob, washing machine, dishwasher');   
+   
+insert into bedroom (bedroomid, areacm2, fixtures, fittings) values
+   ('1','700','1 plug socket','fitted wardrobes');
+   
+insert into bedroom (bedroomid, areacm2, fixtures, fittings) values
+   ('2','650','2 plug sockets','fitted wardrobes'); 
+   
+insert into bedroom (bedroomid, areacm2, fixtures, fittings) values
+   ('3','850','1 plug socket','N/A');
+   
+insert into bedroom (bedroomid, areacm2, fixtures, fittings) values
+   ('4','600','2 plug sockets','bookshelf, walk in Wardrobe');
+   
+insert into dining_room (dining_roomID, areacm2, fixtures, fittings) values
+   ('1','1250','3 plug sockets','fireplace, mantlepeice');
+   
+insert into dining_room (dining_roomID, areacm2, fixtures, fittings) values
+   ('2','1200','2 plug sockets','shelves'); 
+   
+insert into dining_room (dining_roomID, areacm2, fixtures, fittings) values
+   ('3','1000','2 plug sockets','bookshelves'); 
+   
+insert into dining_room (dining_roomID, areacm2, fixtures, fittings) values
+   ('4','2000','3 plug sockets','bookshelves, shelves, recess storage');
+   
+insert into living_room (living_roomID, areacm2, fixtures, fittings) values
+   ('1','2250','3 plug sockets','log burner');
+   
+insert into living_room (living_roomID, areacm2, fixtures, fittings) values
+   ('2','1700','2 plug sockets','bookshelf'); 
+   
+insert into living_room (living_roomID, areacm2, fixtures, fittings) values
+   ('3','1000','2 plug sockets','N/A'); 
+   
+insert into living_room (living_roomID, areacm2, fixtures, fittings) values
+   ('4','1500','3 plug sockets','bookshelf, built in tv'); 
+   
+insert into bathroom (bathroomID, areacm2, fixtures, fittings) values
+   ('1','550','shaver plug socket, hairdryer socket','sink, bath, walk in shower, toilet');
+   
+insert into bathroom (bathroomID, areacm2, fixtures, fittings) values
+   ('2','470','shaver plug socket','sink, shower/bath, toilet'); 
+   
+insert into bathroom (bathroomID, areacm2, fixtures, fittings) values
+   ('3','370','shaver plug socket','sink, shower, clawfoot bath, toilet');
+   
+insert into bathroom (bathroomID, areacm2, fixtures, fittings) values
+   ('4','370','shaver plug socket','sink, shower/bath, toilet');
+   
+
+/* this is where the foreign key information is added to the tables to combat the fact that some of the primary keys may not have been populated at first */
+update surveys set staffno = '1'  where  surveyno = 1;
+update surveys set custno = '1'  where  surveyno = 1;
+update surveys set staffno = '2'  where  surveyno = 2;
+update surveys set custno = '2'  where  surveyno = 2;
+update surveys set staffno = '3'  where  surveyno = 3;
+update surveys set custno = '3'  where  surveyno = 3;
+update surveys set staffno = '4'  where  surveyno = 4;
+update surveys set custno = '4'  where  surveyno = 4;
+
+update properties set branchno = '1'  where  propertyno = 1;
+update properties set advertisingid = '1'  where  propertyno = 1;
+update properties set branchno = '2'  where  propertyno = 2;
+update properties set advertisingid = '2'  where  propertyno = 2;
+update properties set branchno = '3'  where  propertyno = 3;
+update properties set advertisingid = '3'  where  propertyno = 3;
+update properties set branchno = '4'  where  propertyno = 4;
+update properties set advertisingid = '4'  where  propertyno = 4;
+update properties set askingprice = '13000'  where  propertyno = 1;
+update properties set askingprice = '12500'  where  propertyno = 2;
+update properties set askingprice = '10000'  where  propertyno = 3;
+update properties set askingprice = '15500'  where  propertyno = 4;
+update properties set viewid = '1'  where  propertyno = 1;
+update properties set viewid = '2'  where  propertyno = 2;
+update properties set viewid = '3'  where  propertyno = 3;
+update properties set viewid = '4'  where  propertyno = 4;
+
+update sales set ownerno = '1'  where  contno = 1;
+update sales set custno = '1'  where  contno = 1;
+update sales set ownerno = '2'  where  contno = 2;
+update sales set custno = '2'  where  contno = 2;
+update sales set ownerno = '3'  where  contno = 3;
+update sales set custno = '3'  where  contno = 3;
+update sales set ownerno = '4'  where  contno = 4;
+update sales set custno = '4'  where  contno = 4;
+
+update staff set branchno = '1'  where  staffno = 1;
+update staff set branchno = '2'  where  staffno = 2;
+update staff set branchno = '3'  where  staffno = 3;
+update staff set branchno = '4'  where  staffno = 4;
+
+update owners set propertyno = '1'  where  ownerno = 1;
+update owners set propertyno = '2'  where  ownerno = 2;
+update owners set propertyno = '3'  where  ownerno = 3;
+update owners set propertyno = '4'  where  ownerno = 4;
+
+update clients set surveyno = '1'  where  custno = 1;
+update clients set surveyno = '2'  where  custno = 2;
+update clients set surveyno = '3'  where  custno = 3;
+update clients set surveyno = '4'  where  custno = 4;
+
+update kitchen set propertyno = '1'  where  kitchenid = 1;
+update kitchen set propertyno = '2'  where  kitchenid = 2;
+update kitchen set propertyno = '3'  where  kitchenid = 3;
+update kitchen set propertyno = '4'  where  kitchenid = 4;
+
+update bedroom set propertyno = '1'  where  bedroomid = 1;
+update bedroom set propertyno = '2'  where  bedroomid = 2;
+update bedroom set propertyno = '3'  where  bedroomid = 3;
+update bedroom set propertyno = '4'  where  bedroomid = 4;
+
+update dining_room set propertyno = '1'  where  dining_roomid = 1;
+update dining_room set propertyno = '2'  where  dining_roomid = 2;
+update dining_room set propertyno = '3'  where  dining_roomid = 3;
+update dining_room set propertyno = '4'  where  dining_roomid = 4;
+
+update living_room set propertyno = '1'  where  living_roomid = 1;
+update living_room set propertyno = '2'  where  living_roomid = 2;
+update living_room set propertyno = '3'  where  living_roomid = 3;
+update living_room set propertyno = '4'  where  living_roomid = 4;
+
+
+update bathroom set propertyno = '1'  where  bathroomid = 1;
+update bathroom set propertyno = '2'  where  bathroomid = 2;
+update bathroom set propertyno = '3'  where  bathroomid = 3;
+update bathroom set propertyno = '4'  where  bathroomid = 4;
+
+update sales set propertyno = '1'  where  contno = 1;
+update sales set propertyno = '2'  where  contno = 2;
+update sales set propertyno = '3'  where  contno = 3;
+update sales set propertyno = '4'  where  contno = 4;
+
+update surveys set propertyno = '1'  where  surveyno = 1;
+update surveys set propertyno = '2'  where  surveyno = 2;
+update surveys set propertyno = '3'  where  surveyno = 3;
+update surveys set propertyno = '4'  where  surveyno = 4;
+
+update branch set branchname = 'BakerBranch'  where  branchno = 1;
+update branch set branchname = 'ButcherBranch'  where  branchno = 2;
+update branch set branchname = 'SmithBranch'  where  branchno = 3;
+update branch set branchname = 'PooleBranch'  where  branchno = 4;
+
+update viewings set staffno = '1'  where  viewid = 1;
+update viewings set staffno = '2'  where  viewid = 2;
+update viewings set custno = '1'  where  viewid = 1;
+update viewings set custno = '2'  where  viewid = 2;
+update viewings set staffno = '3'  where  viewid = 3;
+update viewings set staffno = '4'  where  viewid = 4;
+update viewings set custno = '3'  where  viewid = 3;
+update viewings set custno = '4'  where  viewid = 4;
+
+/* query 1 */
+select * from branch;
+
+/* query 2 */
+select s.StaffNo, s.SName, b.BranchName, s.branchNo from STAFF s  inner join BRANCH b on s.branchno = B.branchno;
+
+/* query 3 */
+select p.propertyno, p.askingprice, s.priceagreed from properties p inner join sales s on p.propertyno = s.propertyno where s.priceagreed < p.askingprice;
+
+/* query 4 */
+select c.custno, c.maxprice, p.propertyno, p.askingprice from clients c inner join properties p on c.custno = p.propertyno where c.maxprice > p.askingprice and custno = 1;
+
+/* query 5 */
+select surveyno, custno, propertyno from surveys where propertyno = 1;
+
+/* query 6 */
+select surveyno, staffno from surveys where staffno = 1;
+
+/* query 7 */
+select a.advertisingid, p.propertyno from advertising a inner join properties p on a.advertisingid = p.advertisingid;
+
+/* query 8 */
+select p.propertyno, p.branchno, c.custno, c.ctn from properties p inner join clients c on p.propertyno = c.custno where branchno = 1;
+
+/* query 9 */
+select v.viewid, v.custno, v.staffno, p.propertyno from viewings v inner join properties p on v.viewid = p.propertyno where propertyno = 1;
+
+/* query 10 */
+select sum (priceagreed) from sales where priceagreed is not null;
+
+/* query 11 */
+select sum (priceagreed) from sales where contractdate < '11-jan-10';
+
+/* query 12 */
+select max(askingprice), address, propertyno, psize from properties where rownum =1 group by address, propertyno, psize;
+
+/* query 13 */
+select propertyno, count (advertisingid) from properties group by propertyno;
+
+/* query 14 */
+select propertyno, psize from properties;
+
+/* query 15 */
+select propertyno, count (surveyno) from surveys group by propertyno;
+
+/* query 16 */
+select a.staffno, count (a.surveyno) as survey_count, b.sname  from surveys a inner join staff b on a.staffno = b.staffno group by b.sname, a.staffno;
+
+/* query 17 */
+select c.custno, p.propertyno, p.psize, c.desiredrooms from properties p inner join clients c on p.propertyno = c.custno where c.desiredrooms = p.psize and custno = 1;

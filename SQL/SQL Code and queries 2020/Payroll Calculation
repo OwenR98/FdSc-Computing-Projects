@@ -1,0 +1,70 @@
+CREATE GLOBAL TEMPORARY TABLE temp_table_1 ( Staff_ID varchar(5),absence_days number(5),ded_per_day  number(5)) ON COMMIT DELETE ROWS;
+
+CREATE GLOBAL TEMPORARY TABLE temp_table_3 ( Staff_ID varchar(5),skill_increment number(5) ) ON COMMIT DELETE ROWS;
+
+CREATE GLOBAL TEMPORARY TABLE temp_table_2 ( Staff_ID varchar(5), total_meetings number(5), meeting_amount  number(5) ) ON COMMIT DELETE ROWS;
+
+CREATE GLOBAL TEMPORARY TABLE temp_table_4 (
+  Staff_ID varchar(5),
+  Staff_Base_Pay number(5),
+  Absense_days number(3),
+  daily_wage number(5),
+  deduction number(5),
+  skill_increment number(3),
+  meeting_amount number(5),
+  Total_B_Tax number(5),
+  tax number(5),
+  PayTotal number(5)
+  
+)
+ON COMMIT DELETE ROWS;
+
+CREATE OR REPLACE PROCEDURE Calculate_Wages IS
+
+BEGIN
+
+INSERT INTO temp_table_1 (Staff_ID, absence_days, ded_per_day)
+SELECT st.STAFF_ID, NVL(sum(sab.Return_date - sab.Start_Date + 1),0) as absence_days
+, case 
+when sum(sab.Return_date - sab.Start_Date) >= 3 then
+(select ROUND((s.Base_Pay)/365, 0) from staff s where st.staff_id = s.staff_id)   
+when nvl(sum(sab.Return_Date - sab.Start_Date),0) < 3 then 0
+end ded_per_day 
+FROM Staff st left join STAFF_ABSENCE sab on st.staff_id = sab.staff_id and EXTRACT(month FROM sab.Start_Date) = Extract( month FROM sysdate) -- current month
+and Extract(year from sab.Start_Date) = Extract( year FROM sysdate) -- current year
+group by st.STAFF_ID;
+
+
+INSERT INTO temp_table_2 (Staff_ID, total_meetings, meeting_amount)
+select st.staff_id, count(me.staff_id) as total_meetings,
+case when count(me.staff_id) > 0 then count(me.staff_id) * 5
+when count(me.staff_id) = 0 then 0
+End meeting_amount
+from staff st left join Interviews me on st.staff_id = me.staff_id and Extract(month from me.Interview_Date) = EXTRACT(month from sysdate) -- current month
+and Extract(year from me.Interview_Date) = Extract(year from sysdate) -- current year
+group by me.staff_id,st.staff_id; 
+
+INSERT INTO temp_table_3 (Staff_ID, skill_increment)
+select st.staff_id, nvl(sum(skl.Pay_Increase),0) as Pay_Increase from staff st left join skills skl on st.staff_id = skl.staff_id group by st.staff_id; 
+
+INSERT INTO temp_table_4 (Staff_ID, Staff_Base_Pay, Absense_days, daily_wage, deduction, skill_increment, meeting_amount, Total_B_Tax, tax, PayTotal)
+select distinct st.staff_id, st.Base_Pay, t1.absence_days,t1.ded_per_day as daily_wage, (t1.absence_days * t1.ded_per_day) deduciton, t3.skill_increment,
+t2.meeting_amount , ((st.Base_Pay + t3.skill_increment + t2.meeting_amount) - (t1.absence_days * t1.ded_per_day)) as Total_B_Tax, 
+(((st.base_pay /12 + t3.skill_increment + t2.meeting_amount) - (t1.absence_days * t1.ded_per_day)) * 0.20 ) as tax,
+(((st.base_pay /12 + t3.skill_increment + t2.meeting_amount) - (t1.absence_days * t1.ded_per_day)) - 
+(((st.base_pay /12 + t3.skill_increment + t2.meeting_amount) - (t1.absence_days * t1.ded_per_day)) * 0.20 )) as PayTotal
+from Staff st 
+join  TEMP_TABLE_1 t1 on st.staff_id = t1.staff_id 
+join TEMP_TABLE_2 t2 on st.staff_id = t2.staff_id
+join TEMP_TABLE_3 t3 on st.staff_id = t3.staff_id;
+
+
+insert into PayRoll (  Staff_Id, Payroll_total, tax, pay_date  )
+select  staff_id, PayTotal, tax, sysdate
+from temp_table_4;
+
+COMMIT;
+END Calculate_Wages;
+
+select * from Payroll
+ORDER BY Staff_ID;
